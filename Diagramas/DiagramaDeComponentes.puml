@@ -1,0 +1,15 @@
+@startuml Componentes
+title Diagrama de Componentes
+
+package "Sistema de Moeda Estudantil" {
+  [Frontend] as Frontend
+  [Backend API] as Backend
+  [Database] as DB
+  [Email Service] as Email
+
+  Frontend -up-> Backend : API REST (HTTPS)
+  Backend -down-> DB : Prisma ORM (PostgreSQL)
+  Backend -right-> Email : SMTP/API (Notificações)
+}
+
+@enduml
