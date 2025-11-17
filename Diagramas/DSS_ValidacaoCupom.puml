@@ -1,0 +1,33 @@
+@startuml SequenciaValidacaoCupom
+title Diagrama de Sequência - Validação de Cupom (UC-04)
+
+actor Parceiro
+participant Frontend
+participant Backend
+database Database
+
+Parceiro -> Frontend: 1. Acessa tela de validação
+Frontend -> Parceiro: 2. Exibe formulário
+
+Parceiro -> Frontend: 3. Digita código do cupom
+Frontend -> Backend: 4. POST /rewards/validate (parceiroId, codigoCupom)
+
+Backend -> Database: 5. Busca Redemption por código
+Database --> Backend: 6. Retorna Redemption
+
+alt Cupom não encontrado
+    Backend --> Frontend: 7. 404 Not Found (Cupom não encontrado)
+else Cupom pertence a outro Parceiro
+    Backend --> Frontend: 7. 403 Forbidden (Cupom não pertence a este parceiro)
+else Cupom já utilizado/expirado
+    Backend --> Frontend: 7. 400 Bad Request (Cupom já utilizado/expirado)
+else Cupom válido
+    Backend -> Database: 7. Atualiza status da Redemption para UTILIZADO
+    Backend -> Database: 8. Registra validatedAt
+    
+    Backend --> Frontend: 9. 200 OK (Cupom validado)
+end
+
+Frontend --> Parceiro: 10. Exibe mensagem de sucesso/erro
+
+@enduml
