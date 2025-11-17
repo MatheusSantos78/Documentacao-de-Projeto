@@ -1,0 +1,49 @@
+@startuml CasosDeUso
+left to right direction
+
+actor Aluno
+actor Professor
+actor Parceiro
+actor Administrador as Admin
+
+rectangle "Sistema de Moeda Estudantil" {
+  usecase UC01 as "Fazer Login"
+  usecase UC02 as "Enviar Moedas ao Aluno"
+  usecase UC03 as "Resgatar Vantagem"
+  usecase UC04 as "Validar Cupom"
+  usecase UC05 as "Consultar Extrato"
+  usecase UC06 as "Visualizar Catálogo de Vantagens"
+  usecase UC07 as "Cadastrar Vantagem"
+  usecase UC08 as "Gerenciar Usuários"
+  usecase UC09 as "Gerar Código de Resgate"
+  usecase UC10 as "Enviar E-mail de Cupom"
+  usecase UC11 as "Notificar Aluno por E-mail"
+  usecase UC12 as "Validar Saldo do Professor"
+  usecase UC13 as "Informar Motivo do Reconhecimento"
+}
+
+Aluno -- UC01
+Professor -- UC01
+Parceiro -- UC01
+Admin -- UC01
+
+Aluno -- UC03
+Aluno -- UC05
+Aluno -- UC06
+
+Professor -- UC02
+Professor -- UC05
+
+Parceiro -- UC04
+Parceiro -- UC07
+
+Admin -- UC08
+
+UC03 ..> UC09 : <<include>>
+UC03 ..> UC10 : <<include>>
+UC02 ..> UC12 : <<include>>
+UC02 ..> UC13 : <<include>>
+UC02 ..> UC11 : <<include>>
+UC03 ..> UC11 : <<include>>
+
+@enduml
