@@ -2,7 +2,7 @@
 
 Este documento detalha a modelagem e os modelos de projeto para o Sistema de Moeda Estudantil, uma plataforma digital inovadora. O objetivo central do sistema é reconhecer e incentivar o mérito estudantil por meio de uma moeda virtual, que é concedida por professores e utilizada pelos alunos para adquirir vantagens e produtos oferecidos por empresas parceiras.
 
-1. Fundamentos e Requisitos do Sistema
+## 1. Fundamentos e Requisitos do Sistema
 
 A documentação estabelece a base do sistema através da identificação de quatro perfis de usuários primários: Professor, Aluno, Parceiro Comercial e Administrador. Os requisitos funcionais são rigorosamente definidos por meio de Casos de Uso (como o Envio de Moedas, o Resgate de Vantagens e a Validação de Cupons) e formalizados em Contratos de Operação que especificam as condições de sucesso e as regras de negócio para as interações críticas.
 
