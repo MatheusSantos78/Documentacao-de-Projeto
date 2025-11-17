@@ -1,0 +1,34 @@
+@startuml SequenciaResgateVantagem
+title Diagrama de Sequência - Resgate de Vantagem (UC-03)
+
+actor Aluno
+participant Frontend
+participant Backend
+database Database
+participant EmailService
+
+Aluno -> Frontend: 1. Acessa catálogo de vantagens
+Frontend -> Aluno: 2. Exibe vantagens
+
+Aluno -> Frontend: 3. Seleciona e confirma resgate (vantagemId)
+Frontend -> Backend: 4. POST /redemptions/redeem (alunoId, vantagemId)
+
+Backend -> Database: 5. Busca Aluno e Vantagem
+Database --> Backend: 6. Retorna Aluno e Vantagem
+
+alt Saldo Suficiente
+    Backend -> Database: 7. Debita saldo do Aluno
+    Backend -> Database: 8. Cria Transaction (RESGATE_VANTAGEM)
+    Backend -> Database: 9. Cria Redemption (status=GERADO, gera código único)
+    
+    Backend -> EmailService: 10. Envia e-mail de cupom para Aluno e Parceiro
+    EmailService --> Backend: 11. OK
+    
+    Backend --> Frontend: 12. 201 Created (Resgate realizado)
+else Saldo Insuficiente
+    Backend --> Frontend: 7. 400 Bad Request (Saldo insuficiente)
+end
+
+Frontend --> Aluno: 13. Exibe mensagem de sucesso/erro
+
+@enduml
