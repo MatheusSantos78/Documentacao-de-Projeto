@@ -1,0 +1,104 @@
+@startuml Classes
+title Diagrama de Classes
+
+' Enums
+enum Role {
+  ALUNO
+  PROFESSOR
+  PARCEIRO
+  ADMIN
+}
+
+enum TransactionType {
+  CREDITO_PROFESSOR
+  ENVIO_PROFESSOR_ALUNO
+  RESGATE_ALUNO
+  RESGATE_VANTAGEM
+}
+
+enum RedemptionStatus {
+  GERADO
+  UTILIZADO
+  EXPIRADO
+}
+
+' Models
+class User {
+  + id: Int
+  + role: Role
+  + active: Boolean
+  + name: String
+  + email: String {unique}
+  + passwordHash: String
+  + cpf: String?
+  + rg: String?
+  + address: String?
+  + institution: String?
+  + course: String?
+  + department: String?
+  + cnpj: String?
+  + contactName: String?
+  + createdAt: DateTime
+}
+
+class Account {
+  + id: Int
+  + userId: Int {unique}
+  + balance: Int
+  + createdAt: DateTime
+}
+
+class Reward {
+  + id: Int
+  + partnerId: Int
+  + title: String
+  + description: String
+  + cost: Int
+  + imageUrl: String?
+  + createdAt: DateTime
+}
+
+class Redemption {
+  + id: Int
+  + studentId: Int
+  + rewardId: Int
+  + code: String {unique}
+  + status: RedemptionStatus
+  + createdAt: DateTime
+  + validatedAt: DateTime?
+  + transactionId: Int? {unique}
+}
+
+class Transaction {
+  + id: Int
+  + accountId: Int
+  + type: TransactionType
+  + amount: Int
+  + description: String?
+  + createdAt: DateTime
+  + senderId: Int?
+  + receiverId: Int?
+  + redemptionId: Int? {unique}
+}
+
+class Notification {
+  + id: Int
+  + userId: Int
+  + message: String
+  + read: Boolean
+  + createdAt: DateTime
+}
+
+' Relationships
+User "1" -- "0..1" Account : account
+User "1" -- "0..*" Reward : rewards (PartnerRewards)
+User "1" -- "0..*" Redemption : redemptions (StudentRedemptions)
+User "1" -- "0..*" Notification : notifications
+
+Account "1" -- "0..*" Transaction : transactions
+
+Reward "1" -- "0..*" Redemption : redemptions
+
+Redemption "0..1" -- "0..1" Transaction : transaction
+
+@enduml
