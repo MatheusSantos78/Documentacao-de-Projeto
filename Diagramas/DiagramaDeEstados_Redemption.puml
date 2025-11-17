@@ -1,0 +1,12 @@
+@startuml EstadosRedemption
+title Diagrama de Estados - Redemption
+
+[*] --> GERADO : Resgate de Vantagem (UC-03)
+
+GERADO --> UTILIZADO : Validação pelo Parceiro (UC-04)
+GERADO --> EXPIRADO : Expiração do Prazo (Regra de Negócio)
+
+UTILIZADO --> [*]
+EXPIRADO --> [*]
+
+@enduml
