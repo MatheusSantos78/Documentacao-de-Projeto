@@ -1,84 +1,27 @@
-Sistema de Moeda Estudantil
+Descrição Geral da Documentação do Projeto: Sistema de Moeda Estudantil
 
-🌟 Visão Geral
+Este documento detalha a modelagem e os modelos de projeto para o Sistema de Moeda Estudantil, uma plataforma digital inovadora. O objetivo central do sistema é reconhecer e incentivar o mérito estudantil por meio de uma moeda virtual, que é concedida por professores e utilizada pelos alunos para adquirir vantagens e produtos oferecidos por empresas parceiras.
 
-O Sistema de Moeda Estudantil é uma plataforma desenvolvida para incentivar e reconhecer o mérito dos alunos. Professores distribuem uma moeda virtual que pode ser trocada por vantagens oferecidas por empresas parceiras.
+1. Fundamentos e Requisitos do Sistema
 
-✨ Funcionalidades
+A documentação estabelece a base do sistema através da identificação de quatro perfis de usuários primários: Professor, Aluno, Parceiro Comercial e Administrador. Os requisitos funcionais são rigorosamente definidos por meio de Casos de Uso (como o Envio de Moedas, o Resgate de Vantagens e a Validação de Cupons) e formalizados em Contratos de Operação que especificam as condições de sucesso e as regras de negócio para as interações críticas.
 
-•
-Envio de Moedas: Professores enviam moedas para alunos.
+2. Estrutura e Comportamento do Projeto
 
-•
-Resgate de Vantagens: Alunos trocam moedas por cupons de vantagens.
+O projeto é estruturado sob o padrão arquitetural Model-View-Controller (MVC), o que assegura uma clara separação de responsabilidades entre a lógica de negócios, a interface e o controle de fluxo.
 
 •
-Validação de Cupom: Parceiros validam os cupons de resgate.
+Componentes e Distribuição: A solução é implementada com um Frontend (React/TypeScript) para a camada de apresentação e um Backend (Node.js/TypeScript) que expõe a API. A persistência é gerenciada por um Banco de Dados PostgreSQL e o sistema se integra a um Serviço de E-mail para notificações. O Diagrama de Componentes ilustra a interação entre esses módulos.
 
 •
-Consulta de Saldo/Extrato: Visualização do histórico de transações.
-
-💻 Tecnologias
-
-Componente
-Tecnologia
-Frontend
-React, TypeScript, Vite
-Backend
-Node.js, TypeScript
-Banco de Dados
-PostgreSQL
-ORM
-Prisma
-
-
-🚀 Como Rodar Localmente
-
-Pré-requisitos
+Modelagem Estática: O Diagrama de Classes, derivado do schema.prisma, define a estrutura de dados do domínio, incluindo as entidades centrais como User, Account, Reward (Vantagem) e Redemption (Cupom de Resgate).
 
 •
-Node.js
+Modelagem Dinâmica: O comportamento do sistema é detalhado por Diagramas de Sequência para os principais fluxos de trabalho. Além disso, o ciclo de vida do objeto Redemption é modelado por um Diagrama de Estados, que transiciona entre os estados GERADO, UTILIZADO e EXPIRADO.
 
-•
-pnpm (ou npm/yarn)
+3. Persistência e Integridade dos Dados
 
-•
-PostgreSQL (pode ser via Docker)
+O modelo de dados é gerenciado pelo Prisma ORM, que facilita o Mapeamento Objeto-Relacional (O/R) para o banco de dados PostgreSQL. Essa abordagem garante a integridade e a consistência dos dados, sendo o Diagrama de Classes a representação visual desse esquema relacional.
 
-Configuração
-
-1.
-Clonar o Repositório: ```bash git clone https://github.com/viniciusmazzoli/Sistema-de-Moeda-Estudantil.git cd Sistema-de-Moeda-Estudantil ```
-
-2.
-Configurar o Banco de Dados:
-
-•
-Crie um banco de dados PostgreSQL.
-
-•
-Crie um arquivo .env no diretório backend-sistema-moeda com a variável DATABASE_URL.
-
-
-
-3.
-Instalar Dependências e Migrar o Banco de Dados: ```bash cd backend-sistema-moeda pnpm install pnpm prisma migrate dev --name init pnpm prisma generate ```
-
-4.
-Iniciar o Backend: ```bash pnpm dev ```
-
-5.
-Iniciar o Frontend: ```bash cd .. pnpm install pnpm dev ```
-
-📝 Licença
-
-Este projeto está sob a licença MIT.
-
-📞 Contato
-
-•
-Desenvolvedores: [Seu Nome], [Nome do Colega 1], [Nome do Colega 2]
-
-•
-Repositório Original: https://github.com/viniciusmazzoli/Sistema-de-Moeda-Estudantil
+Em conclusão, a documentação fornece uma visão completa, abrangendo desde a especificação dos requisitos funcionais e a definição da arquitetura técnica até a modelagem detalhada do comportamento e da persistência, servindo como o principal artefato para o desenvolvimento e a manutenção do Sistema de Moeda Estudantil.
 
