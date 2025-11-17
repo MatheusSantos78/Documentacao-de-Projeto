@@ -1,0 +1,35 @@
+@startuml SequenciaEnvioMoedas
+title Diagrama de Sequência - Envio de Moedas (UC-02)
+
+actor Professor
+participant Frontend
+participant Backend
+database Database
+participant EmailService
+
+Professor -> Frontend: 1. Acessa tela de envio de moedas
+Frontend -> Professor: 2. Exibe formulário
+
+Professor -> Frontend: 3. Preenche e envia dados (alunoId, valor, motivo)
+Frontend -> Backend: 4. POST /transactions/send (professorId, alunoId, valor, motivo)
+
+Backend -> Database: 5. Busca Professor (verifica saldo/cota semanal)
+Database --> Backend: 6. Retorna Professor
+
+alt Saldo/Cota Suficiente
+    Backend -> Database: 7. Debita saldo do Professor (cota semanal)
+    Backend -> Database: 8. Credita saldo do Aluno
+    Backend -> Database: 9. Cria Transaction (ENVIO_PROFESSOR_ALUNO)
+    Backend -> Database: 10. Cria Notification para Aluno
+    
+    Backend -> EmailService: 11. Envia e-mail de notificação ao Aluno
+    EmailService --> Backend: 12. OK
+    
+    Backend --> Frontend: 13. 201 Created (Transação realizada)
+else Saldo/Cota Insuficiente
+    Backend --> Frontend: 7. 400 Bad Request (Saldo insuficiente)
+end
+
+Frontend --> Professor: 14. Exibe mensagem de sucesso/erro
+
+@enduml
